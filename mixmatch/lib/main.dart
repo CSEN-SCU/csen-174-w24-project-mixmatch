@@ -28,10 +28,14 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red.shade700),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'MixMatch Landing Page'),
+      routes: {
+        '/': (context) => const MyHomePage(title: 'MixMatch Landing Page'),
+        '/swipe': (context) => const SwipePage(title: "Swipe!")
+      }
     );
   }
 }
@@ -112,6 +116,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to first route when tapped.
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SwipePage(title: "Swipe Away!")));
+              },
+              child: const Text('Login'),
+            ),
           ],
         ),
       ),
@@ -120,6 +132,83 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class SwipePage extends StatefulWidget {
+  const SwipePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<SwipePage> createState() => _SwipePageState();
+}
+
+class _SwipePageState extends State<SwipePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: 
+          Row(
+            children: [
+              Column(
+                children: [
+                  ElevatedButton(
+                    child: Text("X"),
+                    onPressed: () => {
+
+                    },
+                    
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+               ),
+              Expanded(child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(child: Placeholder() ),
+                        Expanded(child: Text("DJ John Doe"))
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Text("DJ/Mixing"))
+                      ]
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Placeholder())
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  ElevatedButton(
+                    child: Text("✓"),
+                    onPressed: () => {
+
+                    },
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              )
+            ]
+          )
+      )
     );
   }
 }
