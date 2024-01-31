@@ -1,1 +1,4 @@
-# Add 'print("Firstname Lastname")' on a new line 
+print("Darin Nilsson")
+print("Gabe Labadie")
+print("Antonio Fontan")
+print("Jared Griffith")
