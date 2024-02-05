@@ -163,18 +163,18 @@ class _SwipePageState extends State<SwipePage> {
           Row(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    child: Text("X"),
+                    child: const Text("X"),
                     onPressed: () => {
 
                     },
-                    
+
                   )
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
                ),
-              Expanded(child: Column(
+              const Expanded(child: Column(
                   children: [
                     Row(
                       children: [
@@ -196,15 +196,15 @@ class _SwipePageState extends State<SwipePage> {
                 ),
               ),
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    child: Text("✓"),
+                    child: const Text("✓"),
                     onPressed: () => {
 
                     },
                   )
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
               )
             ]
           )
