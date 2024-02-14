@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10811891670",
+    "project_id": "mixmatch-73fc4",
+    "storage_bucket": "mixmatch-73fc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10811891670:android:ffcfbfeab70ab73bea0e77",
+        "android_client_info": {
+          "package_name": "com.example.mixmatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrADEX4C1tbJhjhOB2hTf6IKc6ZX_T0aQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
