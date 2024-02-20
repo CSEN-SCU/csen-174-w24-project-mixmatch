@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,35 +8,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red.shade700),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 198, 64, 222)),
         useMaterial3: true,
       ),
-      //home: const MyHomePage(title: 'MixMatch Landing Page'),
-      routes: {
-        '/': (context) => const MyHomePage(title: 'MixMatch Landing Page'),
-        '/swipe': (context) => const SwipePage(title: "Swipe!")
-      }
+      home: const ForYouPage(title: 'For You'),
     );
   }
 }
@@ -116,11 +98,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
             ElevatedButton(
               onPressed: () {
                 // Navigate back to first route when tapped.
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const SwipePage(title: "Swipe Away!")));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const SwipePage(title: "Swipe Away!")));
               },
               child: const Text('Login'),
             ),
@@ -149,66 +134,73 @@ class _SwipePageState extends State<SwipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: 
-          Row(
+        appBar: AppBar(
+          // TRY THIS: Try changing the color here to a specific color (to
+          // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+          // change color while the other colors stay the same.
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+        ),
+        body: Center(
+            child: Row(children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  ElevatedButton(
-                    child: Text("X"),
-                    onPressed: () => {
-
-                    },
-                    
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-               ),
-              Expanded(child: Column(
+              ElevatedButton(
+                child: Text("X"),
+                onPressed: () => {},
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(child: Placeholder() ),
-                        Expanded(child: Text("DJ John Doe"))
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: Text("DJ/Mixing"))
-                      ]
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: Placeholder())
-                      ],
-                    )
+                    Expanded(child: Placeholder()),
+                    Expanded(child: Text("DJ John Doe"))
                   ],
                 ),
-              ),
-              Column(
-                children: [
-                  ElevatedButton(
-                    child: Text("✓"),
-                    onPressed: () => {
-
-                    },
-                  )
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
+                Row(children: [Expanded(child: Text("DJ/Mixing"))]),
+                Row(
+                  children: [Expanded(child: Placeholder())],
+                )
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              ElevatedButton(
+                child: Text("✓"),
+                onPressed: () => {},
               )
-            ]
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
           )
-      )
+        ])));
+  }
+}
+
+class ForYouPage extends StatefulWidget {
+  const ForYouPage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<ForYouPage> createState() => _ForYouPageState();
+}
+
+class _ForYouPageState extends State<ForYouPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        HeaderWidget(
+          title: widget.title,
+          icons: const ['profile', 'settings'],
+        ),
+      ],
     );
   }
 }
