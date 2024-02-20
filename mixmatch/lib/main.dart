@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'user.dart';
 import 'src/widgets/profilePage.dart';
 import 'src/widgets/swipe_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
   await Firebase.initializeApp(
@@ -33,6 +34,21 @@ class MyApp extends StatelessWidget {
         }
     );
   }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  // Create a new provider
+  GoogleAuthProvider googleProvider = GoogleAuthProvider();
+
+  // Once signed in, return the UserCredential
+  UserCredential credentials = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+
+  UserProfile.ensure();
+
+  return credentials;
+
+  // Or use signInWithRedirect
+  // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
 }
 
 class MyHomePage extends StatefulWidget {
@@ -84,9 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Edit Profile'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Navigate back to first route when tapped.
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const SwipePage(title: "Swipe Away!")));
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => const SwipePage(title: "Swipe Away!")));
+                UserCredential currUser = await signInWithGoogle();
+
+                print(currUser.user);
               },
               child: const Text('Login'),
             ),
