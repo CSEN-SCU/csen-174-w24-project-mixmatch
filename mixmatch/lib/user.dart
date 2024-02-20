@@ -26,7 +26,7 @@ class UserProfile {
     if (currUser == null) return;
 
     var userProfile = await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).get();
-    
+
     if (!userProfile.exists) {
       await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).set({
         'username': currUser.displayName,
