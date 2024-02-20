@@ -12,18 +12,11 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  final ButtonStyle headerButtonStyle = ElevatedButton.styleFrom(
-      backgroundColor: Colors.grey.shade50,
-      surfaceTintColor: Colors.purple.shade100,
-      shape: const CircleBorder(),
-      elevation: 1.25,
-      minimumSize: const Size(72, 72));
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(),
-      padding: const EdgeInsets.symmetric(horizontal: 300.0, vertical: 25.0),
+      padding: const EdgeInsets.only(left: 100.0, right: 100.0, top: 25.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -31,7 +24,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               onPressed: () {
                 // navigate to profile page
               },
-              style: headerButtonStyle,
+              style: ButtonStyles.headerButtons,
               child: Icon(
                 Icons.headphones,
                 color: Colors.grey.shade900,
@@ -39,7 +32,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 semanticLabel: widget.icons[0],
               )),
           DefaultTextStyle(
-              style: GoogleFonts.inter(textStyle: HeaderTheme.headerText),
+              style: GoogleFonts.inter(textStyle: TextStyles.headerText),
               child: Text(
                 widget.title,
                 textAlign: TextAlign.center,
@@ -48,7 +41,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               onPressed: () {
                 // navigate to settings page
               },
-              style: headerButtonStyle,
+              style: ButtonStyles.headerButtons,
               child: Icon(
                 Icons.settings,
                 color: Colors.grey.shade900,

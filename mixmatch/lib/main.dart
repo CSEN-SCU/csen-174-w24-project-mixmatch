@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mixmatch/info.dart';
 import 'header.dart';
+import 'card.dart';
+import 'tag.dart';
+import 'footer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -192,14 +196,51 @@ class ForYouPage extends StatefulWidget {
 }
 
 class _ForYouPageState extends State<ForYouPage> {
+  static List<Tag> topTags = [
+    Tag(
+        tagName: 'Beats',
+        tagColor: Colors.pink.shade100,
+        textColor: Colors.pink.shade300),
+    Tag(
+        tagName: 'HipHop',
+        tagColor: Colors.blue.shade100,
+        textColor: Colors.blue.shade300),
+    Tag(
+        tagName: 'Rap',
+        tagColor: Colors.orange.shade100,
+        textColor: Colors.orange.shade300),
+  ];
+  static Profile profile = Profile(
+      'Freddy Freelancer',
+      25,
+      'Aspiring music producer. Chicago native. Looking for gigs. 🎸',
+      topTags,
+      [const AssetImage('images/metro-in-studio.png')]);
+
+  List<CardWidget> recs = [
+    CardWidget(
+      profileData: profile,
+    ),
+    CardWidget(
+      profileData: profile,
+    ),
+    CardWidget(
+      profileData: profile,
+    )
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         HeaderWidget(
           title: widget.title,
           icons: const ['profile', 'settings'],
         ),
+        CardWidget(profileData: profile),
+        // ProfileRecs(cards: recs),
+        const Footer(page: 'fyp')
       ],
     );
   }
