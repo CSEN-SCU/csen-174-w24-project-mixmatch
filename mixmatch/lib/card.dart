@@ -12,7 +12,7 @@ class CardWidget extends StatefulWidget {
   State<CardWidget> createState() => _CardWidgetState();
 }
 
-class _CardWidgetState extends State<CardWidget> {
+class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -91,9 +91,7 @@ class _CardWidgetState extends State<CardWidget> {
           bottom: 0,
           left: 0,
           child: ElevatedButton(
-              onPressed: () {
-                // nope current recommendation
-              },
+              onPressed: () {},
               style: ButtonStyles.interactionButtons,
               child: Icon(
                 Icons.clear,
@@ -108,9 +106,7 @@ class _CardWidgetState extends State<CardWidget> {
           bottom: 0,
           right: 0,
           child: ElevatedButton(
-              onPressed: () {
-                // like current recommendation
-              },
+              onPressed: () {},
               style: ButtonStyles.interactionButtons,
               child: Icon(
                 Icons.thumb_up_alt_rounded,

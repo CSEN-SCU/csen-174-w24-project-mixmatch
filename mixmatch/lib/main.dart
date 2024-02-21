@@ -4,6 +4,7 @@ import 'header.dart';
 import 'card.dart';
 import 'tag.dart';
 import 'footer.dart';
+import 'profiles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const ForYouPage(title: 'For You'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -210,38 +212,47 @@ class _ForYouPageState extends State<ForYouPage> {
         tagColor: Colors.orange.shade100,
         textColor: Colors.orange.shade300),
   ];
-  static Profile profile = Profile(
+  static Profile profile1 = Profile(
       'Freddy Freelancer',
       25,
       'Aspiring music producer. Chicago native. Looking for gigs. 🎸',
       topTags,
       [const AssetImage('images/metro-in-studio.png')]);
 
+  static Profile profile2 = Profile(
+      'George Washington',
+      147,
+      'Aspiring music producer. Chicago native. Looking for gigs. 🎸',
+      topTags,
+      [const AssetImage('images/metro-in-studio.png')]);
+
   List<CardWidget> recs = [
     CardWidget(
-      profileData: profile,
+      profileData: profile1,
     ),
     CardWidget(
-      profileData: profile,
+      profileData: profile2,
     ),
     CardWidget(
-      profileData: profile,
+      profileData: profile1,
     )
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        HeaderWidget(
-          title: widget.title,
-          icons: const ['profile', 'settings'],
-        ),
-        CardWidget(profileData: profile),
-        // ProfileRecs(cards: recs),
-        const Footer(page: 'fyp')
-      ],
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          HeaderWidget(
+            title: widget.title,
+            icons: const ['profile', 'settings'],
+          ),
+          // CardWidget(profileData: profile),
+          ProfileRecs(cards: recs),
+          const Footer(page: 'fyp')
+        ],
+      ),
     );
   }
 }

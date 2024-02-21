@@ -46,20 +46,23 @@ abstract class ButtonStyles {
   static ButtonStyle headerButtons = ElevatedButton.styleFrom(
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.purple.shade50,
+      foregroundColor: Colors.purple.shade50,
       shape: const CircleBorder(),
       elevation: 1.25,
       minimumSize: const Size(72, 72));
 
   static ButtonStyle interactionButtons = ElevatedButton.styleFrom(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.white,
       surfaceTintColor: Colors.purple.shade50,
+      foregroundColor: Colors.purple.shade50,
       shape: const CircleBorder(),
       elevation: 3,
       minimumSize: const Size(86, 86));
 
   static ButtonStyle matchesButton = ElevatedButton.styleFrom(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Colors.white,
       surfaceTintColor: Colors.purple.shade50,
+      foregroundColor: Colors.purple.shade50,
       shape: const CircleBorder(),
       elevation: 3,
       minimumSize: const Size(100, 100));
