@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'landing.dart';
+import 'fyp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +20,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,10 +30,8 @@ class MyApp extends StatelessWidget {
         ),
         //home: const MyHomePage(title: 'MixMatch Landing Page'),
         routes: {
-          '/': (context) => const MyHomePage(title: 'MixMatch Landing Page'),
-          '/swipe': (context) => const SwipePage(title: "Swipe!")
-        }
-    );
+          '/fyp': (context) => const ForYouPage(title: 'For You'),
+        });
   }
 }
 
@@ -41,7 +40,8 @@ Future<UserCredential> signInWithGoogle() async {
   GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
   // Once signed in, return the UserCredential
-  UserCredential credentials = await FirebaseAuth.instance.signInWithPopup(googleProvider);
+  UserCredential credentials =
+      await FirebaseAuth.instance.signInWithPopup(googleProvider);
 
   UserProfile.ensure();
 
@@ -72,9 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
         title: Text(widget.title),
       ),
       body: Center(
@@ -94,7 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Pass the documentId of the user profile you want to edit
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage(documentId: "yourDocumentId")),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfilePage(documentId: "yourDocumentId")),
                 );
               },
               child: Text('Edit Profile'),
@@ -120,4 +120,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
