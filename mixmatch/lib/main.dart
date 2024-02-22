@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'landing.dart';
-import 'fyp.dart';
+import 'src/pages/landing.dart';
+import 'src/pages/fyp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'user.dart';
+import 'src/classes/user.dart';
 import 'src/widgets/profilePage.dart';
 import 'src/widgets/swipe_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,14 +23,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'MixMatch',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red.shade700),
           useMaterial3: true,
         ),
-        //home: const MyHomePage(title: 'MixMatch Landing Page'),
+        home: LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle()),
         routes: {
           '/fyp': (context) => const ForYouPage(title: 'For You'),
+          // '/': (context) => const MyHomePage(title: 'MixMatch'),
         });
   }
 }
@@ -94,10 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          ProfilePage(documentId: "yourDocumentId")),
+                          const ProfilePage(documentId: "yourDocumentId")),
                 );
               },
-              child: Text('Edit Profile'),
+              child: const Text('Edit Profile'),
             ),
             ElevatedButton(
               onPressed: () async {

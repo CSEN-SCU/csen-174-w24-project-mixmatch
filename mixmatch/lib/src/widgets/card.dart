@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'styles.dart';
-import 'info.dart';
+import '../classes/styles.dart';
+import '../classes/info.dart';
 
 class CardWidget extends StatefulWidget {
   final Profile profileData;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../user.dart';
+import '../classes/user.dart';
 
 class SwipePage extends StatefulWidget {
   const SwipePage({Key? key, required this.title}) : super(key: key);
@@ -45,52 +45,52 @@ class _SwipePageState extends State<SwipePage> {
         child: userProfile == null
             ? CircularProgressIndicator() // Display a loading indicator while data is fetching
             : Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  //userProfile!.imageUrl
-                  "https://www.careersinmusic.com/wp-content/uploads/2019/11/what-does-a-music-producer-do.jpg", // Use a real image URL,
-                  height: 400.0,
-                  width: 300.0,
-                  fit: BoxFit.cover,
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(
+                        //userProfile!.imageUrl
+                        "https://www.careersinmusic.com/wp-content/uploads/2019/11/what-does-a-music-producer-do.jpg", // Use a real image URL,
+                        height: 400.0,
+                        width: 300.0,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      userProfile!.username,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      userProfile!.tags[0],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          child: Text("X"),
+                          onPressed: () {
+                            // Implement dislike action
+                          },
+                        ),
+                        ElevatedButton(
+                          child: Text("✓"),
+                          onPressed: () {
+                            // Implement like action
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                userProfile!.username,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              SizedBox(height: 10),
-              Text(
-                userProfile!.tags[0],
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    child: Text("X"),
-                    onPressed: () {
-                      // Implement dislike action
-                    },
-                  ),
-                  ElevatedButton(
-                    child: Text("✓"),
-                    onPressed: () {
-                      // Implement like action
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

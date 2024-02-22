@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'styles.dart';
+import '../classes/styles.dart';
 
 class HeaderWidget extends StatefulWidget {
   const HeaderWidget({super.key, required this.title, required this.icons});
