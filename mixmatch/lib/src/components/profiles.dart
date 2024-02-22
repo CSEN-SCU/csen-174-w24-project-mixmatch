@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mixmatch/user.dart';
+import 'package:mixmatch/src/classes/user.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:swipe_to/swipe_to.dart';
@@ -23,18 +23,6 @@ class _ProfileRecsState extends State<ProfileRecs> {
   late int _counter = 0;
   bool _isDone = false;
 
-  _like() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  _nope() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   _done() {
     setState(() {
       _isDone = true;
@@ -47,17 +35,22 @@ class _ProfileRecsState extends State<ProfileRecs> {
 
   @override
   void initState() {
+    print("Init!");
     for (int i = 0; i < widget.cards!.length; ++i) {
       _cards.add(SwipeItem(
         content: widget.cards![i],
-        likeAction: _like,
-        nopeAction: _nope,
+        swipeeID: widget.cards![i].uid,
+        likeAction: (String id) => { setState(() {
+          widget.cards![i].likeAction.call(id);
+          
+        }) },
+        nopeAction: (String id) => { setState(() { widget.cards![i].dislikeAction.call(id); }) },
       ));
     }
 
     _matchEngine = MatchEngine(swipeItems: _cards);
-    if (_cards.isNotEmpty)
-      _topCard = _cards[0].content;
+    // if (_cards.isNotEmpty)
+    //   _topCard = _cards[0].content;
     super.initState();
   }
 
@@ -72,13 +65,14 @@ class _ProfileRecsState extends State<ProfileRecs> {
                   _buildCard(index),
               matchEngine: _matchEngine,
               onStackFinished: _done,
+              
             ),
           )
         : Column(children: [
             DefaultTextStyle(
               style: TextStyles.cardHeaderAge,
               child: Text(
-                  'All recommendations viewed ($_counter)... please come back later! :)'),
+                  'All recommendations viewed... please come back later! :)'),
             ),
           ]);
   }

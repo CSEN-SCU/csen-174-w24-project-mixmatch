@@ -6,7 +6,7 @@ import '../classes/styles.dart';
 
 class LandingPage extends StatelessWidget {
   final String title;
-  final Future<UserCredential> loginFunc;
+  final Future<UserCredential> Function(BuildContext) loginFunc;
   const LandingPage({super.key, required this.title, required this.loginFunc});
 
   @override
@@ -34,7 +34,7 @@ class LandingPage extends StatelessWidget {
               )),
         ),
         ElevatedButton(
-            onPressed: () => loginFunc,
+            onPressed: () => loginFunc(context),
             style: ButtonStyles.loginButton,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

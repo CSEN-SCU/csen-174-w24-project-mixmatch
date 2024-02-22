@@ -1,21 +1,43 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mixmatch/user.dart';
+import 'package:mixmatch/src/classes/user.dart';
 
 import '../classes/styles.dart';
 import '../classes/info.dart';
 
 class CardWidget extends StatefulWidget {
+  final String uid;
   final UserProfile profileData;
-  const CardWidget({super.key, required this.profileData});
+  final Function likeAction;
+  final Function dislikeAction;
+  const CardWidget({super.key, required this.uid, required this.profileData, required this.likeAction, required this.dislikeAction});
 
   @override
   State<CardWidget> createState() => _CardWidgetState();
 }
 
+List<String> defaultImages = [
+  "https://i.imgur.com/5z47dAF.png",
+  "https://i.imgur.com/KYYm2zf.png",
+  "https://i.imgur.com/8G6COCN.png"
+];
+
+String getDefaultImage() {
+  return defaultImages[Random(DateTime.now().millisecondsSinceEpoch).nextInt(defaultImages.length)];
+}
+
 class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+
+    String imageURL = getDefaultImage();
+
+    if (widget.profileData.images.isNotEmpty) {
+      imageURL = widget.profileData.images[0];
+    }
+
     return Stack(
       children: <Widget>[
         Container(
@@ -29,7 +51,7 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                   BoxShadow(color: Colors.grey.shade900, blurRadius: 5.0)
                 ],
                 image: DecorationImage(
-                    image: Image.network(widget.profileData.images[0]).image, fit: BoxFit.cover)),
+                    image: Image.network(imageURL).image, fit: BoxFit.cover)),
           ),
         ),
         Positioned(
@@ -92,13 +114,15 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
           bottom: 0,
           left: 0,
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.dislikeAction(widget.uid);
+              },
               style: ButtonStyles.interactionButtons,
               child: Icon(
                 Icons.clear,
                 color: Colors.grey.shade900,
                 size: 40.0,
-                semanticLabel: 'leave',
+                semanticLabel: 'dislike',
               )),
         ),
         Positioned(
@@ -107,7 +131,9 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
           bottom: 0,
           right: 0,
           child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget.likeAction(widget.uid);
+              },
               style: ButtonStyles.interactionButtons,
               child: Icon(
                 Icons.thumb_up_alt_rounded,

@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mixmatch/card.dart';
-import 'package:mixmatch/tag.dart';
+import 'package:mixmatch/src/widgets/card.dart';
+import 'package:mixmatch/src/widgets/tag.dart';
 
 class UserProfile {
   final String username;
@@ -63,6 +63,22 @@ class UserProfile {
     return FirebaseAuth.instance.currentUser!.uid;
   }
 
+  static Future<String?> idFromUsername(String username) async {
+    var query = await FirebaseFirestore.instance.collection('userProfiles').where("username", isEqualTo: username).get();
+
+    if (query.docs.isEmpty) return null;
+
+    return query.docs[0].id;
+  }
+
+  static Future<String> usernameFromID(String id) async {
+    var user = await FirebaseFirestore.instance.collection('userProfiles').doc(id).get();
+
+    if (!user.exists) return "";
+
+    return user["username"];
+  }
+
   List<Tag> buildTags() {
     List<Tag> tagObjs = [];
 
@@ -84,7 +100,40 @@ class UserProfile {
     return tagObjs;
   }
 
-  CardWidget buildCard() {
-    return CardWidget(profileData: this);
+  Future<CardWidget> buildCard() async {
+    return CardWidget(uid: (await UserProfile.idFromUsername(username))!, profileData: this, likeAction: UserProfile.like, dislikeAction: UserProfile.dislike);
+  }
+
+  static void like(BuildContext context, String targetUserID) async {
+    if (!loggedIn()) return;
+
+    await FirebaseFirestore.instance.collection('swipes').add({
+      'swiper': UserProfile.currentID(),
+      'swipee': targetUserID,
+      'liked': true
+    });
+
+    if (await UserProfile.liked(targetUserID, UserProfile.currentID())) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Matched with ${await usernameFromID(targetUserID)}"),
+        duration: Duration(milliseconds: 2500),
+      ));
+    }
+  }
+
+  static void dislike(BuildContext context, String targetUserID) async {
+    if (!loggedIn()) return;
+
+    await FirebaseFirestore.instance.collection('swipes').add({
+      'swiper': UserProfile.currentID(),
+      'swipee': targetUserID,
+      'liked': false
+    });
+  }
+
+  static Future<bool> liked(String swiper, String swipee) async {
+      var query = await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: swiper).where("swipee", isEqualTo: swipee).get();
+
+      return (query.docs.isNotEmpty);
   }
 }
