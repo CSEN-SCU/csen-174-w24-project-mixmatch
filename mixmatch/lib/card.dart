@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mixmatch/user.dart';
 
 import 'styles.dart';
 import 'info.dart';
 
 class CardWidget extends StatefulWidget {
-  final Profile profileData;
+  final UserProfile profileData;
   const CardWidget({super.key, required this.profileData});
 
   @override
@@ -28,7 +29,7 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                   BoxShadow(color: Colors.grey.shade900, blurRadius: 5.0)
                 ],
                 image: DecorationImage(
-                    image: widget.profileData.images[0], fit: BoxFit.cover)),
+                    image: Image.network(widget.profileData.images[0]).image, fit: BoxFit.cover)),
           ),
         ),
         Positioned(
@@ -52,17 +53,17 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                     DefaultTextStyle(
                         style: GoogleFonts.inter(
                             textStyle: TextStyles.cardHeaderName),
-                        child: Text(widget.profileData.name)),
-                    DefaultTextStyle(
+                        child: Text(widget.profileData.username)),
+                    /*DefaultTextStyle(
                         style: GoogleFonts.inter(
                             textStyle: TextStyles.cardHeaderAge),
-                        child: Text(widget.profileData.age.toString())),
+                        child: Text(widget.profileData.age.toString())),*/
                   ],
                 ),
                 DefaultTextStyle(
                     style: GoogleFonts.inter(textStyle: TextStyles.cardAbout),
                     child: Text(
-                      widget.profileData.about,
+                      widget.profileData.bio,
                     )),
                 Column(
                   children: [
@@ -77,7 +78,7 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: widget.profileData.tags,
+                      children: widget.profileData.buildTags(),
                     )
                   ],
                 ),
