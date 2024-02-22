@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mixmatch/src/classes/user.dart';
 import 'package:swipe_cards/swipe_cards.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:swipe_to/swipe_to.dart';
 
-import 'card.dart';
-import 'styles.dart';
+import '../widgets/card.dart';
+import '../classes/styles.dart';
 
 class ProfileRecs extends StatefulWidget {
-  final List<CardWidget> cards;
+  final List<CardWidget>? cards;
 
   const ProfileRecs({super.key, required this.cards});
 
@@ -16,31 +18,10 @@ class ProfileRecs extends StatefulWidget {
 }
 
 class _ProfileRecsState extends State<ProfileRecs> {
-  late List<CardWidget> _likedProfiles = <CardWidget>[];
-  late List<CardWidget> _nopedProfiles = <CardWidget>[];
   late final List<SwipeItem> _cards = <SwipeItem>[];
-  late CardWidget _topCard;
   late final MatchEngine _matchEngine;
   late int _counter = 0;
   bool _isDone = false;
-
-  // getters
-  List<CardWidget> get likedProfiles => _likedProfiles;
-  List<CardWidget> get nopedProfiles => _nopedProfiles;
-
-  _like() {
-    setState(() {
-      _likedProfiles.add(_topCard);
-      _counter++;
-    });
-  }
-
-  _nope() {
-    setState(() {
-      _nopedProfiles.add(_topCard);
-      _counter++;
-    });
-  }
 
   _done() {
     setState(() {
@@ -54,15 +35,22 @@ class _ProfileRecsState extends State<ProfileRecs> {
 
   @override
   void initState() {
-    for (int i = 0; i < widget.cards.length; ++i) {
+    print("Init!");
+    for (int i = 0; i < widget.cards!.length; ++i) {
       _cards.add(SwipeItem(
-        content: widget.cards[i],
-        likeAction: _like,
-        nopeAction: _nope,
+        content: widget.cards![i],
+        swipeeID: widget.cards![i].uid,
+        likeAction: (String id) => { setState(() {
+          widget.cards![i].likeAction.call(id);
+          
+        }) },
+        nopeAction: (String id) => { setState(() { widget.cards![i].dislikeAction.call(id); }) },
       ));
     }
+
     _matchEngine = MatchEngine(swipeItems: _cards);
-    _topCard = _cards[0].content;
+    // if (_cards.isNotEmpty)
+    //   _topCard = _cards[0].content;
     super.initState();
   }
 
@@ -77,13 +65,14 @@ class _ProfileRecsState extends State<ProfileRecs> {
                   _buildCard(index),
               matchEngine: _matchEngine,
               onStackFinished: _done,
+              
             ),
           )
         : Column(children: [
             DefaultTextStyle(
               style: TextStyles.cardHeaderAge,
               child: Text(
-                  'All recommendations viewed ($_counter)... please come back later! :)'),
+                  'All recommendations viewed... please come back later! :)'),
             ),
           ]);
   }
