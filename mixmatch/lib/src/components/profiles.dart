@@ -5,8 +5,8 @@ import 'package:swipe_cards/swipe_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:swipe_to/swipe_to.dart';
 
-import 'card.dart';
-import 'styles.dart';
+import '../widgets/card.dart';
+import '../classes/styles.dart';
 
 class ProfileRecs extends StatefulWidget {
   final List<CardWidget>? cards;
@@ -18,28 +18,19 @@ class ProfileRecs extends StatefulWidget {
 }
 
 class _ProfileRecsState extends State<ProfileRecs> {
-  late List<CardWidget> _likedProfiles = <CardWidget>[];
-  late List<CardWidget> _nopedProfiles = <CardWidget>[];
   late final List<SwipeItem> _cards = <SwipeItem>[];
-  late CardWidget _topCard;
   late final MatchEngine _matchEngine;
   late int _counter = 0;
   bool _isDone = false;
 
-  // getters
-  List<CardWidget> get likedProfiles => _likedProfiles;
-  List<CardWidget> get nopedProfiles => _nopedProfiles;
-
   _like() {
     setState(() {
-      _likedProfiles.add(_topCard);
       _counter++;
     });
   }
 
   _nope() {
     setState(() {
-      _nopedProfiles.add(_topCard);
       _counter++;
     });
   }

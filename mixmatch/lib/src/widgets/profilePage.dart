@@ -14,7 +14,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _usernameController;
-  late TextEditingController _tagsController; // A single string to simplify, separate tags by commas
+  late TextEditingController
+      _tagsController; // A single string to simplify, separate tags by commas
 
   @override
   void initState() {
@@ -25,36 +26,46 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _loadUserProfile() async {
-    var docSnapshot = await FirebaseFirestore.instance.collection('userProfiles').doc(widget.documentId).get();
+    var docSnapshot = await FirebaseFirestore.instance
+        .collection('userProfiles')
+        .doc(widget.documentId)
+        .get();
     if (docSnapshot.exists) {
       Map<String, dynamic> data = docSnapshot.data()!;
       setState(() {
         _usernameController.text = data['username'];
-        _tagsController.text = data['tags'].join(', '); // Assuming tags is a List<String>
+        _tagsController.text =
+            data['tags'].join(', '); // Assuming tags is a List<String>
       });
     }
   }
 
   Future<void> _saveUserProfile() async {
     // Convert tags from comma-separated string to List<String>
-    List<String> tagsList = _tagsController.text.split(',').map((tag) => tag.trim()).toList();
+    List<String> tagsList =
+        _tagsController.text.split(',').map((tag) => tag.trim()).toList();
 
     // Use set with merge: true to update or create the document
-    await FirebaseFirestore.instance.collection('userProfiles').doc(widget.documentId).set({
+    await FirebaseFirestore.instance
+        .collection('userProfiles')
+        .doc(widget.documentId)
+        .set({
       'username': _usernameController.text,
       'tags': tagsList,
     }, SetOptions(merge: true));
 
     // Navigate to the SwipePage after saving the profile
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const SwipePage(title: "Swipe!")));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const SwipePage(title: "Swipe!")));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: Form(
         key: _formKey,
@@ -64,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               TextFormField(
                 controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: const InputDecoration(labelText: 'Username'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your username';
@@ -74,7 +85,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               TextFormField(
                 controller: _tagsController,
-                decoration: InputDecoration(labelText: 'Tags (comma separated)'),
+                decoration:
+                    const InputDecoration(labelText: 'Tags (comma separated)'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -82,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _saveUserProfile();
                   }
                 },
-                child: Text('Save'),
+                child: const Text('Save'),
               ),
             ],
           ),

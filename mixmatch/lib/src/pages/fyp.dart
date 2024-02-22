@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mixmatch/user.dart';
-import 'info.dart';
-import 'header.dart';
-import 'card.dart';
-import 'tag.dart';
-import 'footer.dart';
-import 'profiles.dart';
+import '../classes/info.dart';
+import '../components/header.dart';
+import '../widgets/card.dart';
+import '../widgets/tag.dart';
+import '../components/footer.dart';
+import '../components/profiles.dart';
 
 class ForYouPage extends StatefulWidget {
   const ForYouPage({super.key, required this.title});

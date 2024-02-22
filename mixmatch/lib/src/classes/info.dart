@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'tag.dart';
+import '../widgets/tag.dart';
 
 class Profile {
   const Profile(this.name, this.age, this.about, this.tags, this.images);
