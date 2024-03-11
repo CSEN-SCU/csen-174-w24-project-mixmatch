@@ -3,11 +3,10 @@ import 'src/pages/landing.dart';
 import 'src/pages/fyp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'src/classes/user.dart';
 import 'src/widgets/profilePage.dart';
-import 'src/widgets/swipe_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'src/pages/onboarding.dart';
 
 Future<void> main() async {
   await Firebase.initializeApp(
@@ -26,9 +25,10 @@ class MyApp extends StatelessWidget {
         title: 'MixMatch',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red.shade700),
-          useMaterial3: true,
+          useMaterial3: false,
         ),
-        home: LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle()),
+        // home: LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle()),
+        home: const OnboardingPage(),
         routes: {
           '/fyp': (context) => const ForYouPage(title: 'For You'),
           // '/': (context) => const MyHomePage(title: 'MixMatch'),
