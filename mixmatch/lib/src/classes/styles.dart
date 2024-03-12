@@ -6,6 +6,27 @@ class TextStyles {
 
   const TextStyles({required this.textColor});
 
+  static TextStyle numMatchesText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      height: 1);
+
+  static TextStyle matchNameText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 20.0,
+      fontWeight: FontWeight.w700,
+      height: 1);
+
+  static TextStyle matchTagText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 12.0,
+      fontWeight: FontWeight.w400,
+      height: 1);
+
   static TextStyle onboardingText = TextStyle(
       color: Colors.grey.shade800,
       fontFamily: 'Inter',

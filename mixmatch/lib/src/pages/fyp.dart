@@ -61,13 +61,19 @@ class _ForYouPageState extends State<ForYouPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HeaderWidget(
-            title: widget.title,
-            icons: const ['profile', 'settings'],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50),
+            child: HeaderWidget(
+              title: widget.title,
+              icons: const ['profile', 'settings'],
+            ),
           ),
           // CardWidget(profileData: profile),
           ProfileRecs(cards: recs),
-          const Footer(page: 'fyp')
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 50),
+            child: Footer(page: 'fyp'),
+          ),
         ],
       ),
     );
