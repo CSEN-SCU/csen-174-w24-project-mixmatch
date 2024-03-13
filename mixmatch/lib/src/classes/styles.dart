@@ -6,6 +6,41 @@ class TextStyles {
 
   const TextStyles({required this.textColor});
 
+  static TextStyle numMatchesText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 14.0,
+      fontWeight: FontWeight.w400,
+      height: 1);
+
+  static TextStyle matchNameText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 20.0,
+      fontWeight: FontWeight.w700,
+      height: 1);
+
+  static TextStyle matchTagText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 12.0,
+      fontWeight: FontWeight.w400,
+      height: 1);
+
+  static TextStyle onboardingText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 60.0,
+      fontWeight: FontWeight.w900,
+      height: 1);
+
+  static TextStyle inputText = TextStyle(
+      color: Colors.grey.shade600,
+      fontFamily: GoogleFonts.inter.toString(),
+      fontSize: 16.0,
+      fontWeight: FontWeight.w500,
+      height: 1);
+
   static TextStyle bigText = TextStyle(
       color: Colors.grey.shade800,
       fontFamily: GoogleFonts.inter.toString(),
@@ -93,6 +128,15 @@ abstract class ButtonStyles {
       surfaceTintColor: Colors.purple.shade50,
       foregroundColor: Colors.purple.shade50,
       elevation: 3,
+      minimumSize: const Size(100, 75),
+      maximumSize: const Size(200, 125));
+
+  static ButtonStyle proceedButton = ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromARGB(255, 230, 145, 230),
+      surfaceTintColor: Colors.purple.shade50,
+      foregroundColor: Colors.purple.shade50,
+      shape: const CircleBorder(),
+      elevation: 5,
       minimumSize: const Size(100, 75),
       maximumSize: const Size(200, 125));
 }
