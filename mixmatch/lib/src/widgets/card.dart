@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mixmatch/src/classes/user.dart';
-
+import 'package:just_audio/just_audio.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../classes/styles.dart';
 import '../classes/info.dart';
+import 'package:flutter/material.dart';
 
 class CardWidget extends StatefulWidget {
   final String uid;
@@ -29,7 +31,13 @@ String getDefaultImage() {
 }
 
 class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
   Widget build(BuildContext context) {
 
     String imageURL = getDefaultImage();
@@ -140,6 +148,28 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                 color: Colors.purple.shade200,
                 size: 40.0,
                 semanticLabel: 'like',
+              )),
+        ),
+        Positioned(
+          height: 86,
+          width: 86,
+          bottom: 172, // Adjust based on your layout
+          right: 0,
+          child: ElevatedButton(
+              onPressed: () async {
+                const url = 'https://soundcloud.com/badbunny15/bad-bunny-perro-negro?in=trending-music-us/sets/latin&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'; // Change this URL to the one you want to open
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  print("Could not launch $url");
+                }
+              },
+              style: ButtonStyles.interactionButtons, // Ensure ButtonStyles.interactionButtons is correctly defined elsewhere in your code
+              child: Icon(
+                Icons.open_in_browser,
+                color: Colors.green.shade800,
+                size: 40.0,
+                semanticLabel: 'Open web page',
               )),
         ),
       ],
