@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mixmatch/src/schema/swipe.dart';
 import 'package:mixmatch/src/widgets/card.dart';
 import 'package:mixmatch/src/widgets/tag.dart';
 
@@ -27,6 +28,27 @@ class UserProfile {
         tags: List.from(doc.get('tags')),
         images: List.from(doc.get('images'))
     );
+  }
+
+  static Future<List<UserProfile>> getMatches() async {
+    List<UserProfile> matches = [];
+
+    var swipes = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: UserProfile.currentID()).get()).docs;
+    for (int i = 0; i < swipes.length; i++) {
+      Map<String, dynamic> swipe = swipes[i].data();
+      var other = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: swipe["swipee"]).where("swipee", isEqualTo: UserProfile.currentID()).get()).docs;
+      if (other.isNotEmpty) {
+        matches.add(await UserProfile.profileFromID(swipe["swipee"]));
+      }
+    }
+
+    return matches;
+  }
+
+  static Future<UserProfile> profileFromID(String id) async {
+    var document = await FirebaseFirestore.instance.collection('userProfiles').doc(id).get();
+
+    return UserProfile.fromDocument(document);
   }
 
   static bool loggedIn() {
@@ -92,7 +114,7 @@ class UserProfile {
       Colors.pink.shade100
     ];
 
-    for (int i = 0; i < tags.length; i++) {
+    for (int i = 0; i < tags.length && i < 3; i++) {
       int colorIndex = Random(tags[i].hashCode).nextInt(tagColors.length);
       tagObjs.add(Tag(tagName: tags[i], textColor: Colors.black, tagColor: tagColors.elementAt(colorIndex)));
     }

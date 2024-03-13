@@ -71,7 +71,7 @@ class _ProfileRecsState extends State<ProfileRecs> {
         : Column(children: [
             DefaultTextStyle(
               style: TextStyles.cardHeaderAge,
-              child: Text(
+              child: const Text(
                   'All recommendations viewed... please come back later! :)'),
             ),
           ]);

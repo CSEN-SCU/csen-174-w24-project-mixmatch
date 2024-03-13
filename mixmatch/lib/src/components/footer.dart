@@ -9,7 +9,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (page) {
-      case 'matches':
+      case 'fyp':
         return Container(
           width: double.infinity,
           height: 200,
@@ -27,7 +27,7 @@ class Footer extends StatelessWidget {
           child: Center(
             child: ElevatedButton(
               onPressed: () {
-                // navigate to settings page
+                Navigator.pushNamed(context, '/matches');
               },
               style: ButtonStyles.matchesButton,
               child: Icon(
@@ -52,7 +52,7 @@ class Footer extends StatelessWidget {
           child: Center(
             child: ElevatedButton(
               onPressed: () {
-                // navigate to settings page
+                Navigator.pushNamed(context, '/fyp');
               },
               style: ButtonStyles.matchesButton,
               child: Icon(

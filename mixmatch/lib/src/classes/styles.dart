@@ -72,14 +72,14 @@ class TextStyles {
   static TextStyle cardHeaderName = TextStyle(
       color: Colors.grey.shade900,
       fontFamily: GoogleFonts.inter.toString(),
-      fontSize: 22.0,
+      fontSize: 24.0,
       fontWeight: FontWeight.w400,
       height: 1);
 
   static TextStyle cardHeaderAge = TextStyle(
       color: Colors.grey.shade900,
       fontFamily: GoogleFonts.inter.toString(),
-      fontSize: 22.0,
+      fontSize: 24.0,
       fontWeight: FontWeight.w800,
       height: 1);
 
@@ -93,7 +93,7 @@ class TextStyles {
   static TextStyle cardTopTags = TextStyle(
       color: Colors.grey.shade700,
       fontFamily: GoogleFonts.inter.toString(),
-      fontSize: 10.0,
+      fontSize: 20.0,
       fontWeight: FontWeight.w400,
       height: 1);
 }

@@ -84,14 +84,20 @@ class MatchWidget extends StatelessWidget {
                   const Padding(padding: EdgeInsets.symmetric(vertical: 7)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: user.buildTags() /* [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Tag(
-                            tagName: user.tags[0],
-                            tagColor: Colors.pink.shade100,
-                            textColor: Colors.pink.shade400),
-                      ),
+                        child: Builder(builder: (BuildContext context) {
+                          if (user.tags.length > 0) {
+                            return Tag(
+                              tagName: user.tags[0],
+                              tagColor: Colors.pink.shade100,
+                              textColor: Colors.pink.shade400
+                            );
+                          }
+                          return const Text("No Tags!");
+                        },
+                      )),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Tag(
@@ -106,7 +112,7 @@ class MatchWidget extends StatelessWidget {
                             tagColor: Colors.green.shade100,
                             textColor: Colors.green.shade400),
                       ),
-                    ],
+                    ],*/
                   )
                 ],
               ),

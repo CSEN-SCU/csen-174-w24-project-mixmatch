@@ -16,10 +16,12 @@ class MatchesPage extends StatefulWidget {
 }
 
 class _MatchesPageState extends State<MatchesPage> {
+  late final Future matchesFuture = UserProfile.getMatches();
+
   // get list of user's matches as UserProfiles
   // pass into Matches widget
 
-  UserProfile user1 = UserProfile(
+  /*UserProfile user1 = UserProfile(
       username: 'Drake Didgeridoo',
       email: '',
       tags: ['R&B', 'HipHop', 'Singer']);
@@ -58,31 +60,37 @@ class _MatchesPageState extends State<MatchesPage> {
   UserProfile user10 = UserProfile(
       username: 'Freddy Freelancer',
       email: '',
-      tags: ['Beats', 'HipHop', 'LFW']);
+      tags: ['Beats', 'HipHop', 'LFW']);*/
 
   List<UserProfile> matches = [];
 
   @override
   void initState() {
-    for (UserProfile user in [
-      user1,
-      user2,
-      user3,
-      user4,
-      user5,
-      user6,
-      user7,
-      user8,
-      user9,
-      user10
-    ]) {
-      matches.add(user);
-    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget middle = FutureBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            matches.addAll(snapshot.data!);
+          }
+
+          if (matches.isNotEmpty) {
+            return Matches(matches: matches);
+          }
+          else {
+            return DefaultTextStyle(
+              style: TextStyles.cardHeaderAge,
+              child: const Text(
+                  'You do not have any matches. Time to get to swiping!'),
+            );
+          }
+        },
+        future: matchesFuture
+    );
+
     return Scaffold(
       appBar: HeaderWidget(
         title: widget.title,
@@ -103,7 +111,7 @@ class _MatchesPageState extends State<MatchesPage> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Matches(matches: matches),
+                child: middle,
               ),
             ),
           ],
