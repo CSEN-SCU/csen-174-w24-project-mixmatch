@@ -6,6 +6,20 @@ class TextStyles {
 
   const TextStyles({required this.textColor});
 
+  static TextStyle profileBioText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 18.0,
+      fontWeight: FontWeight.w400,
+      height: 1);
+
+  static TextStyle profileNameText = TextStyle(
+      color: Colors.grey.shade800,
+      fontFamily: 'Inter',
+      fontSize: 36.0,
+      fontWeight: FontWeight.w800,
+      height: 1);
+
   static TextStyle numMatchesText = TextStyle(
       color: Colors.grey.shade800,
       fontFamily: 'Inter',
