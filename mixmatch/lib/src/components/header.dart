@@ -9,13 +9,55 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(),
-      padding: const EdgeInsets.only(left: 100.0, right: 100.0, top: 50.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          ElevatedButton(
+    if (icons == const ['back', 'edit']) {
+      return Container(
+        decoration: const BoxDecoration(),
+        padding: const EdgeInsets.only(left: 100.0, right: 100.0, top: 50.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                // navigate to profile page
+              },
+              style: ButtonStyles.headerButtons,
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.grey.shade900,
+                size: 36.0,
+                semanticLabel: icons[0],
+              ),
+            ),
+            DefaultTextStyle(
+              style: GoogleFonts.inter(textStyle: TextStyles.headerText),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // navigate to settings page
+              },
+              style: ButtonStyles.headerButtons,
+              child: Icon(
+                Icons.edit,
+                color: Colors.grey.shade900,
+                size: 36.0,
+                semanticLabel: icons[1],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (icons == const ['profile', 'settings']) {
+      return Container(
+        decoration: const BoxDecoration(),
+        padding: const EdgeInsets.only(left: 100.0, right: 100.0, top: 50.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ElevatedButton(
               onPressed: () {
                 // navigate to profile page
               },
@@ -25,27 +67,36 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
                 color: Colors.grey.shade900,
                 size: 36.0,
                 semanticLabel: icons[0],
-              )),
-          DefaultTextStyle(
+              ),
+            ),
+            DefaultTextStyle(
               style: GoogleFonts.inter(textStyle: TextStyles.headerText),
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-              )),
-          ElevatedButton(
-              onPressed: () {
-                // navigate to settings page
-              },
-              style: ButtonStyles.headerButtons,
-              child: Icon(
-                Icons.settings,
-                color: Colors.grey.shade900,
-                size: 36.0,
-                semanticLabel: icons[1],
-              )),
-        ],
-      ),
-    );
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        decoration: const BoxDecoration(),
+        padding: const EdgeInsets.only(left: 100.0, right: 100.0, top: 50.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            DefaultTextStyle(
+              style: GoogleFonts.inter(textStyle: TextStyles.headerText),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
