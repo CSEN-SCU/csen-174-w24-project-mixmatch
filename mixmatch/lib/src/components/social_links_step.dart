@@ -1,4 +1,12 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mixmatch/src/classes/user.dart';
 import '../classes/styles.dart';
 
 class SocialLinksStep extends StatefulWidget {
@@ -46,6 +54,13 @@ class _SocialLinksStepState extends State<SocialLinksStep> {
       padding: const EdgeInsets.only(top: 50),
       child: Column(
         children: [
+          DefaultTextStyle(
+              style: GoogleFonts.inter(textStyle: TextStyles.profileBioText),
+              child: const Text(
+                "Choose your best track to show off your skills!",
+                textAlign: TextAlign.center,
+              )
+            ),
           Theme(
             data: ThemeData(
               textSelectionTheme: TextSelectionThemeData(
@@ -73,9 +88,21 @@ class _SocialLinksStepState extends State<SocialLinksStep> {
                   hintStyle: TextStyles.inputText,
                   hintText: "Music Track Link",
                 ),
+                onSaved: ((newValue) async {
+                  await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).set({
+                    'trackLink': newValue,
+                  }, SetOptions(merge: true));
+                })
               ),
             ),
           ),
+          DefaultTextStyle(
+              style: GoogleFonts.inter(textStyle: TextStyles.profileBioText),
+              child: const Text(
+                "Put a link to your profile picture.",
+                textAlign: TextAlign.center,
+              )
+            ),
           Theme(
             data: ThemeData(
               textSelectionTheme: TextSelectionThemeData(
@@ -110,6 +137,11 @@ class _SocialLinksStepState extends State<SocialLinksStep> {
                     borderSide: BorderSide(color: Colors.grey.shade700),
                   ),
                 ),
+                onSaved: ((newValue) async {
+                  await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).set({
+                    'images': [ newValue ],
+                  }, SetOptions(merge: true));
+                })
               ),
             ),
           ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mixmatch/src/classes/profile_args.dart';
+import 'package:mixmatch/src/classes/user.dart';
+import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
 import '../classes/styles.dart';
 import '../components/profile_info_step.dart';
 import '../components/social_links_step.dart';
@@ -49,6 +52,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: ElevatedButton(
                 onPressed: () {
                   // _step == 3 ? navigate to fyp
+                  if (_step == 2) {
+                    Navigator.popAndPushNamed(context, ProfileArgumentsScreen.routeName,
+                      arguments: ProfileArguments(UserProfile.currentID())
+                    );
+                  }
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     setState(() {
