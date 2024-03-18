@@ -138,27 +138,32 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                 semanticLabel: 'like',
               )),
         ),
-        Positioned(
-          height: 86,
-          width: 86,
-          bottom: 172, // Adjust based on your layout
-          right: 0,
-          child: ElevatedButton(
-              onPressed: () async {
-                if (await canLaunch(widget.profileData.trackLink)) {
-                  await launch(widget.profileData.trackLink);
-                } else {
-                  print("Could not launch $widget.profileData.trackLink");
-                }
-              },
-              style: ButtonStyles.interactionButtons, // Ensure ButtonStyles.interactionButtons is correctly defined elsewhere in your code
-              child: Icon(
-                Icons.open_in_browser,
-                color: Colors.green.shade800,
-                size: 40.0,
-                semanticLabel: 'Open web page',
-              )),
-        ),
+        Builder(builder: (BuildContext context) {
+          if (widget.profileData.trackLink == null)
+            return Text("No Track");
+
+          return Positioned(
+            height: 86,
+            width: 86,
+            bottom: 172, // Adjust based on your layout
+            right: 0,
+            child: ElevatedButton(
+                onPressed: () async {
+                  if (await canLaunch(widget.profileData.trackLink!)) {
+                    await launch(widget.profileData.trackLink!);
+                  } else {
+                    print("Could not launch $widget.profileData.trackLink");
+                  }
+                },
+                style: ButtonStyles.interactionButtons, // Ensure ButtonStyles.interactionButtons is correctly defined elsewhere in your code
+                child: Icon(
+                  Icons.open_in_browser,
+                  color: Colors.green.shade800,
+                  size: 40.0,
+                  semanticLabel: 'Open web page',
+                )),
+          );
+        }) 
       ],
     );
   }

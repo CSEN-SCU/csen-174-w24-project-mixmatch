@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mixmatch/src/classes/profile_args.dart';
 import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
-
 import '../classes/user.dart';
 import '../classes/styles.dart';
-import '../widgets/tag.dart';
 
 class MatchWidget extends StatelessWidget {
   final String id;
