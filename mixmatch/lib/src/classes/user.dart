@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mixmatch/src/schema/swipe.dart';
 import 'package:mixmatch/src/widgets/card.dart';
 import 'package:mixmatch/src/widgets/tag.dart';
 
@@ -11,11 +10,12 @@ class UserProfile {
   final String username;
   final String email;
   final String bio;
+  final String trackLink;
   // Assuming tags is an array of strings. Adjust if the data type is different.
   final List<String> tags;
   final List<String> images;
 
-  UserProfile({required this.username, required this.email, required this.bio, required this.tags, required this.images});
+  UserProfile({required this.username, required this.email, required this.bio, required this.tags, required this.images, required this.trackLink});
 
   factory UserProfile.fromDocument(DocumentSnapshot doc) {
     // Cast the tags as List<dynamic> to ensure compatibility with Firestore arrays.
@@ -26,7 +26,8 @@ class UserProfile {
         email: doc.get('email'),
         bio: doc.get('bio'),
         tags: List.from(doc.get('tags')),
-        images: List.from(doc.get('images'))
+        images: List.from(doc.get('images')),
+        trackLink: doc.get('trackLink')
     );
   }
 
