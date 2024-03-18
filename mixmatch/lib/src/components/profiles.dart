@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mixmatch/src/classes/user.dart';
 import 'package:swipe_cards/swipe_cards.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:swipe_to/swipe_to.dart';
 
 import '../widgets/card.dart';
@@ -20,7 +18,6 @@ class ProfileRecs extends StatefulWidget {
 class _ProfileRecsState extends State<ProfileRecs> {
   late final List<SwipeItem> _cards = <SwipeItem>[];
   late final MatchEngine _matchEngine;
-  late int _counter = 0;
   bool _isDone = false;
 
   _done() {

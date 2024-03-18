@@ -10,12 +10,12 @@ class UserProfile {
   final String username;
   final String email;
   final String bio;
-  final String trackLink;
+  final String? trackLink;
   // Assuming tags is an array of strings. Adjust if the data type is different.
   final List<String> tags;
   final List<String> images;
 
-  UserProfile({required this.username, required this.email, required this.bio, required this.tags, required this.images, required this.trackLink});
+  UserProfile({required this.username, required this.email, required this.bio, required this.tags, required this.images, this.trackLink});
 
   factory UserProfile.fromDocument(DocumentSnapshot doc) {
     // Cast the tags as List<dynamic> to ensure compatibility with Firestore arrays.
@@ -83,7 +83,8 @@ class UserProfile {
         'email': FirebaseAuth.instance.currentUser?.email,
         'bio': "",
         'tags': List<String>.empty(),
-        'images': List<String>.empty()
+        'images': List<String>.empty(),
+        'trackLink': ""
       }, SetOptions(merge: true));
     }
   }

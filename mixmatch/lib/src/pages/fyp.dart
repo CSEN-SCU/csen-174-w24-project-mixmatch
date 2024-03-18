@@ -4,11 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixmatch/src/classes/styles.dart';
 import 'package:mixmatch/src/classes/user.dart';
-import 'package:mixmatch/src/schema/swipe.dart';
-import '../classes/info.dart';
 import '../components/header.dart';
 import '../widgets/card.dart';
-import '../widgets/tag.dart';
 import '../components/footer.dart';
 import '../components/profiles.dart';
 

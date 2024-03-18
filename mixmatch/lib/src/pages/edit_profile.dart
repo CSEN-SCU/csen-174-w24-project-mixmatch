@@ -2,13 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mixmatch/src/classes/profile_args.dart';
-
 import 'package:mixmatch/src/classes/styles.dart';
 import 'package:mixmatch/src/classes/user.dart';
 import 'package:mixmatch/src/components/header.dart';
-import 'package:mixmatch/src/components/footer.dart';
-import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
 import 'package:mixmatch/src/widgets/tag.dart';
 
 class EditProfilePage extends StatefulWidget {
