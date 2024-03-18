@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mixmatch/src/classes/profile_args.dart';
+import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
 
 import '../classes/user.dart';
 import '../classes/styles.dart';
 import '../widgets/tag.dart';
 
 class MatchWidget extends StatelessWidget {
+  final String id;
   final UserProfile user;
-  const MatchWidget({super.key, required this.user});
+  const MatchWidget({super.key, required this.id, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +19,10 @@ class MatchWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // open profile of given user
+          
+          Navigator.pushNamed(context, ProfileArgumentsScreen.routeName,
+            arguments: ProfileArguments(id)
+          );
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.transparent,
@@ -62,9 +69,9 @@ class MatchWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                child: const ClipOval(
+                child: ClipOval(
                   child: Image(
-                    image: AssetImage('assets/images/metro-in-studio.png'),
+                    image: Image.network(user.getImage()).image,//AssetImage('assets/images/metro-in-studio.png'),
                     width: 65,
                     height: 65,
                   ),

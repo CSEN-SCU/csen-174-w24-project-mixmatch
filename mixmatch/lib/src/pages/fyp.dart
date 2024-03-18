@@ -13,8 +13,9 @@ import '../components/footer.dart';
 import '../components/profiles.dart';
 
 class ForYouPage extends StatefulWidget {
-  const ForYouPage({super.key, required this.title});
+  const ForYouPage({super.key, required this.icons, required this.title});
   final String title;
+  final List<String> icons;
 
   @override
   State<ForYouPage> createState() => _ForYouPageState();
@@ -111,7 +112,7 @@ class _ForYouPageState extends State<ForYouPage> {
             padding: const EdgeInsets.symmetric(vertical: 25),
             child: HeaderWidget(
               title: widget.title,
-              icons: const ['profile', 'settings'],
+              icons: widget.icons,
             ),
           ),
           // CardWidget(profileData: profile),

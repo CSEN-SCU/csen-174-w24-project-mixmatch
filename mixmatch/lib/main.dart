@@ -3,6 +3,8 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:mixmatch/src/pages/landing.dart';
 import 'package:mixmatch/src/pages/matches.dart';
+import 'package:mixmatch/src/pages/onboarding.dart';
+import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
 // import 'src/pages/landing.dart';
 import 'src/pages/profile.dart';
 import 'src/pages/fyp.dart';
@@ -24,11 +26,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final UserProfile user = UserProfile(
-      username: 'Freddy Freelancer',
-      email: '',
-      tags: ['Beats', 'HipHop', 'LFW']);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,12 +37,18 @@ class MyApp extends StatelessWidget {
         // home: LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle()),
         home: const LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle),
         routes: {
-          '/profile' (context) => const ProfilePage(title: "Profile",
+          /*'/profile': (context) => ProfilePage(title: "Profile",
             icons: const ['back', 'edit'],
-            user: user,
+            userID: UserProfile.currentID()
+          ),*/
+          ProfileArgumentsScreen.routeName: (context) => const ProfileArgumentsScreen(), 
+          '/fyp': (context) => const ForYouPage(title: 'For You',
+            icons: const ['profile', 'edit']
           ),
-          '/fyp': (context) => const ForYouPage(title: 'For You'),
-          '/matches': (context) => const MatchesPage(title: 'Matches'),
+          '/matches': (context) => const MatchesPage(title: 'Matches',
+            icons: const ['back', 'profile']
+          ),
+          '/onboarding': (context) => const OnboardingPage()
         });
   }
 }
@@ -58,10 +61,16 @@ Future<UserCredential> signInWithGoogle(BuildContext context) async {
   UserCredential credentials =
       await FirebaseAuth.instance.signInWithPopup(googleProvider);
 
-  UserProfile.ensure();
+  await UserProfile.ensure();
 
   if (UserProfile.loggedIn()) {
-    Navigator.pushNamed(context, '/fyp');
+    UserProfile? user = await UserProfile.currentProfile();
+    if (user!.bio == "") {
+      Navigator.pushNamed(context, '/onboarding');
+    }
+    else {
+      Navigator.pushNamed(context, '/fyp');
+    }
   }
 
   return credentials;

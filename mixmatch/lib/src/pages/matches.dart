@@ -8,15 +8,16 @@ import '../classes/styles.dart';
 import '../classes/user.dart';
 
 class MatchesPage extends StatefulWidget {
-  const MatchesPage({super.key, required this.title});
+  const MatchesPage({super.key, required this.icons, required this.title});
   final String title;
+  final List<String> icons;
 
   @override
   State<MatchesPage> createState() => _MatchesPageState();
 }
 
 class _MatchesPageState extends State<MatchesPage> {
-  late final Future matchesFuture = UserProfile.getMatches();
+  late final Future<Map<String, UserProfile>> matchesFuture = UserProfile.getMatches();
 
   // get list of user's matches as UserProfiles
   // pass into Matches widget
@@ -62,7 +63,7 @@ class _MatchesPageState extends State<MatchesPage> {
       email: '',
       tags: ['Beats', 'HipHop', 'LFW']);*/
 
-  List<UserProfile> matches = [];
+  Map<String, UserProfile> matches = <String, UserProfile>{};
 
   @override
   void initState() {
@@ -81,6 +82,14 @@ class _MatchesPageState extends State<MatchesPage> {
             return Matches(matches: matches);
           }
           else {
+            if (!snapshot.hasData) {
+              return DefaultTextStyle(
+                style: TextStyles.cardHeaderAge,
+                child: const Text(
+                    'Loading your matches... sit tight!'),
+              );
+            }
+
             return DefaultTextStyle(
               style: TextStyles.cardHeaderAge,
               child: const Text(
@@ -94,7 +103,7 @@ class _MatchesPageState extends State<MatchesPage> {
     return Scaffold(
       appBar: HeaderWidget(
         title: widget.title,
-        icons: const ['profile', 'settings'],
+        icons: widget.icons,
       ),
       body: Center(
         child: Column(

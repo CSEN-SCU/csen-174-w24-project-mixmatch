@@ -30,15 +30,31 @@ class UserProfile {
     );
   }
 
-  static Future<List<UserProfile>> getMatches() async {
-    List<UserProfile> matches = [];
+  static List<String> defaultImages = [
+    "https://i.imgur.com/5z47dAF.png",
+    "https://i.imgur.com/KYYm2zf.png",
+    "https://i.imgur.com/8G6COCN.png"
+  ];
+
+  static String getDefaultImage() {
+    return defaultImages[Random(DateTime.now().millisecondsSinceEpoch).nextInt(defaultImages.length)];
+  }
+
+  String getImage() {
+    if (images.isEmpty) return getDefaultImage();
+
+    return images[0];
+  }
+
+  static Future<Map<String, UserProfile>> getMatches() async {
+    Map<String, UserProfile> matches = <String, UserProfile>{};
 
     var swipes = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: UserProfile.currentID()).get()).docs;
     for (int i = 0; i < swipes.length; i++) {
       Map<String, dynamic> swipe = swipes[i].data();
       var other = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: swipe["swipee"]).where("swipee", isEqualTo: UserProfile.currentID()).get()).docs;
       if (other.isNotEmpty) {
-        matches.add(await UserProfile.profileFromID(swipe["swipee"]));
+        matches[swipe["swipee"]] = await UserProfile.profileFromID(swipe["swipee"]);
       }
     }
 
@@ -55,7 +71,7 @@ class UserProfile {
     return FirebaseAuth.instance.currentUser != null;
   }
 
-  static void ensure() async {
+  static Future<void> ensure() async {
     if (!loggedIn()) return;
 
     var userProfile = await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).get();
@@ -138,7 +154,7 @@ class UserProfile {
     if (await UserProfile.liked(targetUserID, UserProfile.currentID())) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Matched with ${await usernameFromID(targetUserID)}"),
-        duration: Duration(milliseconds: 2500),
+        duration: const Duration(milliseconds: 2500),
       ));
     }
   }

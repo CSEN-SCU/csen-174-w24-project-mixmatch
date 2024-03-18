@@ -4,7 +4,8 @@ import '../widgets/match_widget.dart';
 import '../classes/user.dart';
 
 class Matches extends StatefulWidget {
-  final List<UserProfile> matches;
+
+  final Map<String, UserProfile> matches;
   const Matches({super.key, required this.matches});
 
   @override
@@ -16,8 +17,8 @@ class _MatchesState extends State<Matches> {
 
   @override
   void initState() {
-    for (UserProfile user in widget.matches) {
-      matchWidgets.add(MatchWidget(user: user));
+    for (MapEntry<String, UserProfile> entry in widget.matches.entries) {
+      matchWidgets.add(MatchWidget(user: entry.value, id: entry.key));
     }
     super.initState();
   }

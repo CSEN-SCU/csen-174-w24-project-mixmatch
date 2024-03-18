@@ -13,7 +13,8 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   late int _step;
-  late final List<dynamic> _stepWidgets;
+  late final List<StatefulWidget> _stepWidgets;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -39,15 +40,21 @@ class _OnboardingPageState extends State<OnboardingPage> {
               'STEP ${_step + 1} / 3',
               style: TextStyles.bodyText,
             ),
-            _stepWidgets[_step],
+            Form(
+              key: _formKey,
+              child:_stepWidgets[_step]
+            ),
             Container(
               padding: const EdgeInsets.only(top: 50),
               child: ElevatedButton(
                 onPressed: () {
                   // _step == 3 ? navigate to fyp
-                  setState(() {
-                    _step++;
-                  });
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    setState(() {
+                      _step++;
+                    });
+                  }
                 },
                 style: ButtonStyles.proceedButton,
                 child: const Icon(

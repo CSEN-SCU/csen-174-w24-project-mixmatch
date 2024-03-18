@@ -43,7 +43,7 @@ class _SwipePageState extends State<SwipePage> {
       ),
       body: Center(
         child: userProfile == null
-            ? CircularProgressIndicator() // Display a loading indicator while data is fetching
+            ? const CircularProgressIndicator() // Display a loading indicator while data is fetching
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -59,29 +59,29 @@ class _SwipePageState extends State<SwipePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Text(
                       userProfile!.username,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       userProfile!.tags[0],
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
-                          child: Text("X"),
+                          child: const Text("X"),
                           onPressed: () {
                             // Implement dislike action
                           },
                         ),
                         ElevatedButton(
-                          child: Text("✓"),
+                          child: const Text("✓"),
                           onPressed: () {
                             // Implement like action
                           },

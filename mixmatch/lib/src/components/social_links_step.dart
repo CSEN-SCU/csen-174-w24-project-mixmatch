@@ -11,7 +11,6 @@ class SocialLinksStep extends StatefulWidget {
 class _SocialLinksStepState extends State<SocialLinksStep> {
   late final String soundcloudLink;
   late final String imgurLink;
-  final _formKey = GlobalKey<FormState>();
   final _soundcloudLinkController = TextEditingController();
   final _imgurLinkController = TextEditingController();
 
@@ -43,81 +42,78 @@ class _SocialLinksStepState extends State<SocialLinksStep> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Container(
-        padding: const EdgeInsets.only(top: 50),
-        child: Column(
-          children: [
-            Theme(
-              data: ThemeData(
-                textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: Colors.purple.shade50),
-                inputDecorationTheme: InputDecorationTheme(
+    return Container(
+      padding: const EdgeInsets.only(top: 50),
+      child: Column(
+        children: [
+          Theme(
+            data: ThemeData(
+              textSelectionTheme: TextSelectionThemeData(
+                  selectionColor: Colors.purple.shade50),
+              inputDecorationTheme: InputDecorationTheme(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide(color: Colors.grey.shade700),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide(color: Colors.grey.shade500),
+                ),
+              ),
+            ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              width: 400,
+              child: TextFormField(
+                controller: _soundcloudLinkController,
+                cursorColor: Colors.purple.shade200,
+                style: TextStyles.inputText,
+                cursorHeight: 26,
+                decoration: InputDecoration(
+                  hintStyle: TextStyles.inputText,
+                  hintText: "Music Track Link",
+                ),
+              ),
+            ),
+          ),
+          Theme(
+            data: ThemeData(
+              textSelectionTheme: TextSelectionThemeData(
+                  selectionColor: Colors.purple.shade50),
+              inputDecorationTheme: InputDecorationTheme(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide(color: Colors.grey.shade700),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide(color: Colors.grey.shade500),
+                ),
+              ),
+            ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              width: 400,
+              child: TextFormField(
+                controller: _imgurLinkController,
+                cursorColor: Colors.purple.shade200,
+                style: TextStyles.inputText,
+                decoration: InputDecoration(
+                  hintStyle: TextStyles.inputText,
+                  hintText: "Imgur Link",
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                     borderSide: BorderSide(color: Colors.grey.shade700),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: Colors.grey.shade500),
-                  ),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                width: 400,
-                child: TextFormField(
-                  controller: _soundcloudLinkController,
-                  cursorColor: Colors.purple.shade200,
-                  style: TextStyles.inputText,
-                  cursorHeight: 26,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyles.inputText,
-                    hintText: "Soundcloud Link",
-                  ),
-                ),
-              ),
-            ),
-            Theme(
-              data: ThemeData(
-                textSelectionTheme: TextSelectionThemeData(
-                    selectionColor: Colors.purple.shade50),
-                inputDecorationTheme: InputDecorationTheme(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
                     borderSide: BorderSide(color: Colors.grey.shade700),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(color: Colors.grey.shade500),
-                  ),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                width: 400,
-                child: TextFormField(
-                  controller: _imgurLinkController,
-                  cursorColor: Colors.purple.shade200,
-                  style: TextStyles.inputText,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyles.inputText,
-                    hintText: "Imgur Link",
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide(color: Colors.grey.shade700),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide(color: Colors.grey.shade700),
-                    ),
-                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
