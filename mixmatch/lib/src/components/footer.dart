@@ -69,6 +69,36 @@ class Footer extends StatelessWidget {
             ),
           ),
         );
+      case 'edit-profile':
+        return Container(
+          width: double.infinity,
+          height: 200,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white.withOpacity(0.1),
+                Colors.white.withOpacity(0.7)
+              ],
+              stops: const [0.3, 1.0],
+            ),
+          ),
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                // navigate to settings page
+              },
+              style: ButtonStyles.matchesButton,
+              child: Icon(
+                Icons.save,
+                color: Colors.grey.shade900,
+                size: 50.0,
+                semanticLabel: 'save',
+              ),
+            ),
+          ),
+        );
       default:
         return Container(
           height: 200,

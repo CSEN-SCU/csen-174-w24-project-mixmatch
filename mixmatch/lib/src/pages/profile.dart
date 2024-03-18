@@ -23,7 +23,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  late final Future<UserProfile> userFuture = UserProfile.profileFromID(widget.userID);
+  @override
+  void initState() {
+    super.initState();
+    userFuture = UserProfile.profileFromID(widget.userID);
+  }
+
+  late Future<UserProfile> userFuture;
 
   Widget buildTags(UserProfile user) {
     const double tagWidth = 100;

@@ -42,6 +42,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
             ElevatedButton(
               onPressed: () {
                 // navigate to settings page
+                Navigator.pushNamed(context, '/edit-profile');
               },
               style: ButtonStyles.headerButtons,
               child: Icon(
@@ -123,7 +124,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                // navigate to settings page
+                Navigator.pushNamed(context, '/edit-profile');
               },
               style: ButtonStyles.headerButtons,
               child: Icon(
@@ -190,7 +191,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
             ElevatedButton(
               onPressed: () {
                 // navigate to profile page
-                Navigator.pushNamed(context, 'edit-profile');
+                Navigator.pushNamed(context, '/edit-profile');
               },
               style: ButtonStyles.headerButtons,
               child: Icon(

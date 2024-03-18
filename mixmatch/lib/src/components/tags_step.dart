@@ -12,7 +12,7 @@ class TagSelectStep extends StatefulWidget {
 }
 
 class _TagSelectStepState extends State<TagSelectStep> {
-  static const List<String> valid_tags = [
+  static List<String> valid_tags = [
     "Producer",
     "DJ",
     "A&R",

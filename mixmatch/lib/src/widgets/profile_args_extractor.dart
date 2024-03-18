@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mixmatch/src/classes/profile_args.dart';
+import 'package:mixmatch/src/classes/user.dart';
 import 'package:mixmatch/src/pages/profile.dart';
 
 class ProfileArgumentsScreen extends StatelessWidget {
@@ -16,10 +17,20 @@ class ProfileArgumentsScreen extends StatelessWidget {
     // settings and cast them as ScreenArguments.
     final args = ModalRoute.of(context)!.settings.arguments as ProfileArguments;
 
-    return ProfilePage(title: "Profile",
-      icons: const ['back', 'edit'],
-      userID: args.id,
-    ); /*Scaffold(
+
+    if (args.id == UserProfile.currentID()) {
+      return ProfilePage(title: "Profile",
+        icons: const ['back', 'edit'],
+        userID: args.id,
+      );
+    }
+    else {
+      return ProfilePage(title: "Profile",
+        icons: const ['back', 'profile'],
+        userID: args.id,
+      );
+    }
+     /*Scaffold(
       appBar: AppBar(
         title: Text(args.title),
       ),

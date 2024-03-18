@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mixmatch/src/pages/edit_profile.dart';
 import 'package:mixmatch/src/pages/landing.dart';
 import 'package:mixmatch/src/pages/matches.dart';
 import 'package:mixmatch/src/pages/onboarding.dart';
@@ -34,10 +35,10 @@ class MyApp extends StatelessWidget {
         // home: LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle()),
         home: const LandingPage(title: 'MixMatch', loginFunc: signInWithGoogle),
         routes: {
-          /*'/profile': (context) => ProfilePage(title: "Profile",
-            icons: const ['back', 'edit'],
+          '/edit-profile': (context) => EditProfilePage(title: "Edit Profile",
+            icons: const ['back', 'profile'],
             userID: UserProfile.currentID()
-          ),*/
+          ),
           ProfileArgumentsScreen.routeName: (context) => const ProfileArgumentsScreen(), 
           '/fyp': (context) => const ForYouPage(title: 'For You',
             icons: ['profile', 'edit']
