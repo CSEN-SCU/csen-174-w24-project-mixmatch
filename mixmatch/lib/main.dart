@@ -1,12 +1,9 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:mixmatch/src/pages/landing.dart';
 import 'package:mixmatch/src/pages/matches.dart';
 import 'package:mixmatch/src/pages/onboarding.dart';
 import 'package:mixmatch/src/widgets/profile_args_extractor.dart';
 // import 'src/pages/landing.dart';
-import 'src/pages/profile.dart';
 import 'src/pages/fyp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -20,11 +17,11 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +40,10 @@ class MyApp extends StatelessWidget {
           ),*/
           ProfileArgumentsScreen.routeName: (context) => const ProfileArgumentsScreen(), 
           '/fyp': (context) => const ForYouPage(title: 'For You',
-            icons: const ['profile', 'edit']
+            icons: ['profile', 'edit']
           ),
           '/matches': (context) => const MatchesPage(title: 'Matches',
-            icons: const ['back', 'profile']
+            icons: ['back', 'profile']
           ),
           '/onboarding': (context) => const OnboardingPage()
         });
