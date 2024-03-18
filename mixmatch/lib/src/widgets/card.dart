@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mixmatch/src/classes/user.dart';
-
+import 'package:just_audio/just_audio.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../classes/styles.dart';
-import '../classes/info.dart';
 
 class CardWidget extends StatefulWidget {
   final String uid;
@@ -18,21 +17,17 @@ class CardWidget extends StatefulWidget {
   State<CardWidget> createState() => _CardWidgetState();
 }
 
-List<String> defaultImages = [
-  "https://i.imgur.com/5z47dAF.png",
-  "https://i.imgur.com/KYYm2zf.png",
-  "https://i.imgur.com/8G6COCN.png"
-];
-
-String getDefaultImage() {
-  return defaultImages[Random(DateTime.now().millisecondsSinceEpoch).nextInt(defaultImages.length)];
-}
-
 class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
   Widget build(BuildContext context) {
 
-    String imageURL = getDefaultImage();
+    String imageURL = UserProfile.getDefaultImage();
 
     if (widget.profileData.images.isNotEmpty) {
       imageURL = widget.profileData.images[0];
@@ -55,12 +50,12 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          height: 240,
+          height: 320,
           width: 320,
-          bottom: 60,
+          bottom: 40,
           right: 40,
           child: Container(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24),
@@ -87,6 +82,7 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                     child: Text(
                       widget.profileData.bio,
                     )),
+                //HtmlWidget('<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7tfILeIeYQWEa3jdfg7BCA?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>'),
                 Column(
                   children: [
                     DefaultTextStyle(
@@ -140,6 +136,28 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
                 color: Colors.purple.shade200,
                 size: 40.0,
                 semanticLabel: 'like',
+              )),
+        ),
+        Positioned(
+          height: 86,
+          width: 86,
+          bottom: 172, // Adjust based on your layout
+          right: 0,
+          child: ElevatedButton(
+              onPressed: () async {
+                const url = 'https://soundcloud.com/badbunny15/bad-bunny-perro-negro?in=trending-music-us/sets/latin&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'; // Change this URL to the one you want to open
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  print("Could not launch $url");
+                }
+              },
+              style: ButtonStyles.interactionButtons, // Ensure ButtonStyles.interactionButtons is correctly defined elsewhere in your code
+              child: Icon(
+                Icons.open_in_browser,
+                color: Colors.green.shade800,
+                size: 40.0,
+                semanticLabel: 'Open web page',
               )),
         ),
       ],

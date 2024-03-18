@@ -31,7 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^0.22.0
-  google_fonts: ^6.1.0
+  google_fonts: 6.1.0
+  just_audio: ^0.9.36
+  url_launcher: ^6.0.9
   swipe_cards:
     git: https://github.com/glabadie2001/swipe_cards_with_id.git
 
@@ -43,6 +45,9 @@ dependencies:
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.5
   firebase_auth: ^4.17.4
+  firebase_storage: ^11.6.9
+  image_picker: ^1.0.7
+  image_picker_for_web: ^3.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mixmatch/src/classes/styles.dart';
@@ -11,8 +13,9 @@ import '../components/footer.dart';
 import '../components/profiles.dart';
 
 class ForYouPage extends StatefulWidget {
-  const ForYouPage({super.key, required this.title});
+  const ForYouPage({super.key, required this.icons, required this.title});
   final String title;
+  final List<String> icons;
 
   @override
   State<ForYouPage> createState() => _ForYouPageState();
@@ -29,6 +32,8 @@ class _ForYouPageState extends State<ForYouPage> {
 
     var profiles = (await FirebaseFirestore.instance.collection('userProfiles').get()).docs;
 
+    profiles.shuffle(Random(DateTime.now().millisecondsSinceEpoch));
+
     var swipes = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: UserProfile.currentID()).get()).docs;
 
     //TODO: O(n^2) is trash pls fix. I read BloomFilters may help!
@@ -44,10 +49,10 @@ class _ForYouPageState extends State<ForYouPage> {
     for (i = 0; i < profiles.length; i++) {
       UserProfile profile = UserProfile.fromDocument(profiles[i]);
       //TODO: This could be null, careful my boy
-      String id = (await UserProfile.idFromUsername(profile.username))!;
+      //String id = (await UserProfile.idFromUsername(profile.username))!;
       if (profiles[i].id != UserProfile.currentID()) {
         cards.add(CardWidget(
-          uid: id,
+          uid: profiles[i].id,
           profileData: profile,
           likeAction: (String id) => {
             UserProfile.like(context, id)
@@ -70,18 +75,31 @@ class _ForYouPageState extends State<ForYouPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             cards.addAll(snapshot.data!);
-          }
-
-          if (cards.isNotEmpty) {
-            return ProfileRecs(cards: cards);
-          }
-          else {
-            return DefaultTextStyle(
+            if (cards.isNotEmpty) {
+              return ProfileRecs(cards: cards);
+            }
+            else {
+              return DefaultTextStyle(
+                style: TextStyles.cardHeaderAge,
+                child: const Text(
+                    'All recommendations viewed... please come back later! :)'),
+              );
+            }
+          } else if (snapshot.hasError) {
+              return DefaultTextStyle(
               style: TextStyles.cardHeaderAge,
               child: Text(
-                  'All recommendations viewed... please come back later! :)'),
+                  'An error has occurred...\n\n${snapshot.error}'),
+            );
+          } else {
+            return DefaultTextStyle(
+              style: TextStyles.cardHeaderAge,
+              child: const Text(
+                  'Loading...'),
             );
           }
+
+          
         },
         future: cardFuture
     );
@@ -90,13 +108,20 @@ class _ForYouPageState extends State<ForYouPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HeaderWidget(
-            title: widget.title,
-            icons: const ['profile', 'settings'],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: HeaderWidget(
+              title: widget.title,
+              icons: widget.icons,
+            ),
           ),
           // CardWidget(profileData: profile),
           middle,
-          const Footer(page: 'fyp')
+          const Expanded(child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 25),
+            child: Footer(page: 'fyp'),
+          ))
+          ,
         ],
       )
     );

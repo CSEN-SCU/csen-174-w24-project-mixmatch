@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mixmatch/src/schema/swipe.dart';
 import 'package:mixmatch/src/widgets/card.dart';
 import 'package:mixmatch/src/widgets/tag.dart';
 
@@ -29,11 +30,48 @@ class UserProfile {
     );
   }
 
+  static List<String> defaultImages = [
+    "https://i.imgur.com/5z47dAF.png",
+    "https://i.imgur.com/KYYm2zf.png",
+    "https://i.imgur.com/8G6COCN.png"
+  ];
+
+  static String getDefaultImage() {
+    return defaultImages[Random(DateTime.now().millisecondsSinceEpoch).nextInt(defaultImages.length)];
+  }
+
+  String getImage() {
+    if (images.isEmpty) return getDefaultImage();
+
+    return images[0];
+  }
+
+  static Future<Map<String, UserProfile>> getMatches() async {
+    Map<String, UserProfile> matches = <String, UserProfile>{};
+
+    var swipes = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: UserProfile.currentID()).get()).docs;
+    for (int i = 0; i < swipes.length; i++) {
+      Map<String, dynamic> swipe = swipes[i].data();
+      var other = (await FirebaseFirestore.instance.collection('swipes').where("swiper", isEqualTo: swipe["swipee"]).where("swipee", isEqualTo: UserProfile.currentID()).get()).docs;
+      if (other.isNotEmpty) {
+        matches[swipe["swipee"]] = await UserProfile.profileFromID(swipe["swipee"]);
+      }
+    }
+
+    return matches;
+  }
+
+  static Future<UserProfile> profileFromID(String id) async {
+    var document = await FirebaseFirestore.instance.collection('userProfiles').doc(id).get();
+
+    return UserProfile.fromDocument(document);
+  }
+
   static bool loggedIn() {
     return FirebaseAuth.instance.currentUser != null;
   }
 
-  static void ensure() async {
+  static Future<void> ensure() async {
     if (!loggedIn()) return;
 
     var userProfile = await FirebaseFirestore.instance.collection('userProfiles').doc(FirebaseAuth.instance.currentUser?.uid).get();
@@ -92,7 +130,7 @@ class UserProfile {
       Colors.pink.shade100
     ];
 
-    for (int i = 0; i < tags.length; i++) {
+    for (int i = 0; i < tags.length && i < 3; i++) {
       int colorIndex = Random(tags[i].hashCode).nextInt(tagColors.length);
       tagObjs.add(Tag(tagName: tags[i], textColor: Colors.black, tagColor: tagColors.elementAt(colorIndex)));
     }
@@ -116,7 +154,7 @@ class UserProfile {
     if (await UserProfile.liked(targetUserID, UserProfile.currentID())) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Matched with ${await usernameFromID(targetUserID)}"),
-        duration: Duration(milliseconds: 2500),
+        duration: const Duration(milliseconds: 2500),
       ));
     }
   }
