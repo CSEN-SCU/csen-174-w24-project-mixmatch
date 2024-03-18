@@ -145,11 +145,10 @@ class _CardWidgetState extends State<CardWidget> with TickerProviderStateMixin {
           right: 0,
           child: ElevatedButton(
               onPressed: () async {
-                const url = 'https://soundcloud.com/badbunny15/bad-bunny-perro-negro?in=trending-music-us/sets/latin&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'; // Change this URL to the one you want to open
-                if (await canLaunch(url)) {
-                  await launch(url);
+                if (await canLaunch(widget.profileData.trackLink)) {
+                  await launch(widget.profileData.trackLink);
                 } else {
-                  print("Could not launch $url");
+                  print("Could not launch $widget.profileData.trackLink");
                 }
               },
               style: ButtonStyles.interactionButtons, // Ensure ButtonStyles.interactionButtons is correctly defined elsewhere in your code
